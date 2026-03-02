@@ -1,5 +1,5 @@
-import { ThemeProvider } from 'next-themes'
 import "./globals.css";
+import Navbar from '@/components/shared/NavBar';
 
 export default function RootLayout({
   children,
@@ -9,13 +9,10 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body>
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="light"    
-          enableSystem={false}    
-        >
-          {children}
-        </ThemeProvider>
+        <Navbar />
+
+        {children}
+
       </body>
     </html>
   )
