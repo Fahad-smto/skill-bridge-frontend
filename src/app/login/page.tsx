@@ -84,7 +84,7 @@ export default function LoginPage() {
         </div>
 
         {/* Bottom Testimonial */}
-        <div className="relative bg-white/5 border border-white/10 rounded-2xl p-5">
+        <div className="relative bg-white/5 border mt-4 border-white/10 rounded-2xl p-5">
           <p className="text-white/70 text-sm leading-relaxed italic">
             SkillBridge helped me land my dream job in just 3 months. The tutors are exceptional!
           </p>
