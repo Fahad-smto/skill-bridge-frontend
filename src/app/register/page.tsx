@@ -3,17 +3,19 @@
 import { useState } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
-import { Button } from '@/components/ui/button'
 import { Eye, EyeOff, GraduationCap, ArrowRight } from 'lucide-react'
+import { Button } from '@/components/ui/button'
 
-export default function LoginPage() {
+export default function RegisterPage() {
   const router = useRouter()
   const [showPassword, setShowPassword] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState('')
   const [formData, setFormData] = useState({
+    name: '',
     email: '',
     password: '',
+    role: 'STUDENT',
   })
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -23,7 +25,7 @@ export default function LoginPage() {
 
     try {
       const res = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/api/v1/auth/login`,
+        `${process.env.NEXT_PUBLIC_API_URL}/api/v1/auth/register`,
         {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
@@ -34,24 +36,22 @@ export default function LoginPage() {
       const data = await res.json()
 
       if (!data.success) {
-        setError(data.message || 'Login failed')
+        setError(data.message || 'Registration failed')
         return
       }
 
-      // Token এবং user save করো
+      // Save token
       localStorage.setItem('token', data.data.token)
       localStorage.setItem('user', JSON.stringify(data.data.user))
 
-      // Role based redirect
-      const role = data.data.user.role
-      if (role === 'ADMIN') {
-        router.push('/dashboard/admin')
-      } else if (role === 'TUTOR') {
+      // Redirect based on role
+      if (formData.role === 'TUTOR') {
         router.push('/dashboard/tutor')
+        console.log('successfully registerd');
       } else {
         router.push('/dashboard/student')
+         console.log('successfully registerd');
       }
-
     } catch (err) {
       setError('Something went wrong. Please try again.')
     } finally {
@@ -64,6 +64,8 @@ export default function LoginPage() {
 
       {/* ── Left Panel ── */}
       <div className="hidden lg:flex lg:w-1/2 relative overflow-hidden bg-zinc-950 flex-col justify-between p-12">
+
+        {/* Background Grid */}
         <div
           className="absolute inset-0 opacity-10"
           style={{
@@ -72,56 +74,61 @@ export default function LoginPage() {
             backgroundSize: '60px 60px',
           }}
         />
-        <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 rounded-full bg-blue-500/20 blur-3xl pointer-events-none" />
-        <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 rounded-full bg-indigo-500/20 blur-2xl pointer-events-none" />
 
+        {/* Orbs */}
+        <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 rounded-full bg-indigo-500/20 blur-3xl pointer-events-none" />
+        <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 rounded-full bg-blue-500/20 blur-2xl pointer-events-none" />
+
+        {/* Logo */}
         <div className="relative flex items-center gap-2 text-white">
           <GraduationCap className="w-8 h-8" />
           <span className="text-xl font-bold tracking-tight">SkillBridge</span>
         </div>
 
+        {/* Center Content */}
         <div className="relative space-y-8">
           <div className="space-y-4">
             <div className="inline-flex items-center gap-2 bg-white/10 border border-white/20 rounded-full px-4 py-1.5 text-white/70 text-sm">
-              <span className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
-              1,200+ Expert Tutors Online
+              🎓 Join 10,000+ learners today
             </div>
             <h1 className="text-5xl font-bold text-white leading-tight">
-              Learn from the
-              <span className="block text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-indigo-400">
-                best minds.
+              Start your
+              <span className="block text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-blue-400">
+                learning journey.
               </span>
             </h1>
             <p className="text-white/50 text-lg leading-relaxed max-w-sm">
-              Connect with verified experts, book sessions instantly, and accelerate your learning journey.
+              Create a free account and get instant access to 1,200+ verified tutors across 50+ subjects.
             </p>
           </div>
 
-          <div className="grid grid-cols-3 gap-4">
+          {/* Feature List */}
+          <div className="space-y-3">
             {[
-              { value: '10K+', label: 'Students' },
-              { value: '1.2K+', label: 'Tutors' },
-              { value: '4.9★', label: 'Rating' },
-            ].map((stat) => (
-              <div key={stat.label} className="bg-white/5 border border-white/10 rounded-2xl p-4 text-center">
-                <div className="text-2xl font-bold text-white">{stat.value}</div>
-                <div className="text-white/40 text-xs mt-1">{stat.label}</div>
+              '✅ Free to join, no credit card required',
+              '✅ Browse and book tutors instantly',
+              '✅ Learn at your own pace',
+              '✅ Cancel anytime',
+            ].map((item) => (
+              <div key={item} className="text-white/60 text-sm">
+                {item}
               </div>
             ))}
           </div>
         </div>
 
-        <div className="relative bg-white/5 border mt-4 border-white/10 rounded-2xl p-5">
+        {/* Bottom */}
+        <div className="relative bg-white/5 border border-white/10 rounded-2xl p-5">
           <p className="text-white/70 text-sm leading-relaxed italic">
-            SkillBridge helped me land my dream job in just 3 months. The tutors are exceptional!
+        I found an amazing Math tutor within minutes. My grades improved drastically in just 2 months!
           </p>
           <div className="flex items-center gap-3 mt-4">
-            <div className="w-8 h-8 rounded-full bg-gradient-to-br from-blue-400 to-indigo-400 flex items-center justify-center text-white text-xs font-bold">
-              R
+            <div className="w-8 h-8 rounded-full bg-gradient-to-br from-indigo-400 to-blue-400 flex items-center justify-center text-white text-xs font-bold">
+              S
             </div>
             <div>
-              <div className="text-white text-sm font-medium">Rahim Ahmed</div>
-              <div className="text-white/40 text-xs">Software Engineer</div>
+              <div className="text-white text-sm font-medium">Sadia Akter</div>
+              <div className="text-white/40 text-xs">Student, Dhaka</div>
             </div>
           </div>
         </div>
@@ -129,32 +136,79 @@ export default function LoginPage() {
 
       {/* ── Right Panel ── */}
       <div className="w-full lg:w-1/2 flex items-center justify-center p-8 bg-background">
-        <div className="w-full max-w-md space-y-8">
+        <div className="w-full max-w-md space-y-7">
 
+          {/* Header */}
           <div className="space-y-2">
             <div className="lg:hidden flex items-center gap-2 mb-6">
               <GraduationCap className="w-7 h-7 text-primary" />
               <span className="text-xl font-bold">SkillBridge</span>
             </div>
             <h2 className="text-3xl font-bold text-foreground tracking-tight">
-              Welcome back
+              Create your account
             </h2>
             <p className="text-muted-foreground">
-              Do not have an account?{' '}
-              <Link href="/register" className="text-primary font-medium hover:underline">
-                Sign up free
+              Already have an account?{' '}
+              <Link href="/login" className="text-primary font-medium hover:underline">
+                Sign in
               </Link>
             </p>
           </div>
 
-          {/* ✅ Error Message */}
+          {/* Role Selector */}
+          <div className="space-y-2">
+            <label className="text-sm font-medium text-foreground">
+              I want to...
+            </label>
+            <div className="grid grid-cols-2 gap-3">
+              {[
+                { role: 'STUDENT', label: 'Learn', emoji: '👨‍🎓', desc: 'Find a tutor' },
+                { role: 'TUTOR', label: 'Teach', emoji: '👨‍🏫', desc: 'Share my skills' },
+              ].map((item) => (
+                <button
+                  key={item.role}
+                  type="button"
+                  onClick={() => setFormData({ ...formData, role: item.role })}
+                  className={`flex flex-col items-center gap-1 p-4 rounded-xl border-2 transition-all ${
+                    formData.role === item.role
+                      ? 'border-primary bg-primary/5'
+                      : 'border-border hover:border-primary/50'
+                  }`}
+                >
+                  <span className="text-2xl">{item.emoji}</span>
+                  <span className="text-sm font-semibold text-foreground">{item.label}</span>
+                  <span className="text-xs text-muted-foreground">{item.desc}</span>
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {/* Error */}
           {error && (
             <div className="bg-red-50 border border-red-200 text-red-600 text-sm px-4 py-3 rounded-lg">
               {error}
             </div>
           )}
 
-          <form onSubmit={handleSubmit} className="space-y-5">
+          {/* Form */}
+          <form onSubmit={handleSubmit} className="space-y-4">
+
+            {/* Name */}
+            <div className="space-y-1.5">
+              <label className="text-sm font-medium text-foreground">
+                Full Name
+              </label>
+              <input
+                type="text"
+                placeholder="Rahim Ahmed"
+                value={formData.name}
+                onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                required
+                className="w-full px-4 py-2.5 rounded-lg border border-border bg-background text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring transition-all text-sm"
+              />
+            </div>
+
+            {/* Email */}
             <div className="space-y-1.5">
               <label className="text-sm font-medium text-foreground">
                 Email address
@@ -169,22 +223,19 @@ export default function LoginPage() {
               />
             </div>
 
+            {/* Password */}
             <div className="space-y-1.5">
-              <div className="flex items-center justify-between">
-                <label className="text-sm font-medium text-foreground">
-                  Password
-                </label>
-                <Link href="/forgot-password" className="text-xs text-primary hover:underline">
-                  Forgot password?
-                </Link>
-              </div>
+              <label className="text-sm font-medium text-foreground">
+                Password
+              </label>
               <div className="relative">
                 <input
                   type={showPassword ? 'text' : 'password'}
-                  placeholder="••••••••"
+                  placeholder="Min. 6 characters"
                   value={formData.password}
                   onChange={(e) => setFormData({ ...formData, password: e.target.value })}
                   required
+                  minLength={6}
                   className="w-full px-4 py-2.5 rounded-lg border border-border bg-background text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring transition-all text-sm pr-11"
                 />
                 <button
@@ -197,6 +248,15 @@ export default function LoginPage() {
               </div>
             </div>
 
+            {/* Terms */}
+            <p className="text-xs text-muted-foreground">
+              By creating an account, you agree to our{' '}
+              <Link href="/terms" className="text-primary hover:underline">Terms of Service</Link>
+              {' '}and{' '}
+              <Link href="/privacy" className="text-primary hover:underline">Privacy Policy</Link>.
+            </p>
+
+            {/* Submit */}
             <Button
               type="submit"
               className="w-full h-11 text-sm font-medium"
@@ -205,42 +265,16 @@ export default function LoginPage() {
               {isLoading ? (
                 <span className="flex items-center gap-2">
                   <span className="w-4 h-4 border-2 border-primary-foreground/30 border-t-primary-foreground rounded-full animate-spin" />
-                  Signing in...
+                  Creating account...
                 </span>
               ) : (
                 <span className="flex items-center gap-2">
-                  Sign in
+                  Create Account
                   <ArrowRight className="w-4 h-4" />
                 </span>
               )}
             </Button>
           </form>
-
-          <div className="relative">
-            <div className="absolute inset-0 flex items-center">
-              <div className="w-full border-t border-border" />
-            </div>
-            <div className="relative flex justify-center text-xs uppercase">
-              <span className="bg-background px-2 text-muted-foreground">or continue as</span>
-            </div>
-          </div>
-
-          <div className="grid grid-cols-2 gap-3">
-            {[
-              { role: 'Student', emoji: '👨‍🎓', desc: 'Find a tutor' },
-              { role: 'Tutor', emoji: '👨‍🏫', desc: 'Start teaching' },
-            ].map((item) => (
-              <Link
-                key={item.role}
-                href={`/register?role=${item.role.toUpperCase()}`}
-                className="flex flex-col items-center gap-1 p-4 rounded-xl border border-border hover:border-primary hover:bg-primary/5 transition-all group"
-              >
-                <span className="text-2xl">{item.emoji}</span>
-                <span className="text-sm font-medium text-foreground">{item.role}</span>
-                <span className="text-xs text-muted-foreground">{item.desc}</span>
-              </Link>
-            ))}
-          </div>
 
         </div>
       </div>
