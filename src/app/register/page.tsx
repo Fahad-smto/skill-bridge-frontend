@@ -5,6 +5,7 @@ import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { Eye, EyeOff, GraduationCap, ArrowRight } from 'lucide-react'
 import { Button } from '@/components/ui/button'
+import { toast } from 'sonner' // যদি toast ব্যবহার করেন
 
 export default function RegisterPage() {
   const router = useRouter()
@@ -23,6 +24,25 @@ export default function RegisterPage() {
     setIsLoading(true)
     setError('')
 
+    // Form validation
+    if (!formData.name.trim()) {
+      setError('Please enter your full name')
+      setIsLoading(false)
+      return
+    }
+
+    if (!formData.email.trim()) {
+      setError('Please enter your email address')
+      setIsLoading(false)
+      return
+    }
+
+    if (formData.password.length < 6) {
+      setError('Password must be at least 6 characters long')
+      setIsLoading(false)
+      return
+    }
+
     try {
       const res = await fetch(
         `${process.env.NEXT_PUBLIC_API_URL}/api/v1/auth/register`,
@@ -35,25 +55,52 @@ export default function RegisterPage() {
 
       const data = await res.json()
 
+      // ✅ Check response structure
       if (!data.success) {
         setError(data.message || 'Registration failed')
+        toast?.error(data.message || 'Registration failed')
         return
       }
 
-      // Save token
-      localStorage.setItem('token', data.data.token)
-      localStorage.setItem('user', JSON.stringify(data.data.user))
+      // ✅ Save token and user data (check correct path)
+      // Option 1: যদি token সরাসরি data.token এ আসে
+      const token = data.token || data.data?.token
+      const user = data.user || data.data?.user
 
-      // Redirect based on role
-      if (formData.role === 'TUTOR') {
-        router.push('/dashboard/tutor')
-        console.log('successfully registerd');
-      } else {
-        router.push('/dashboard/student')
-         console.log('successfully registerd');
+      if (!token || !user) {
+        console.error('Invalid response structure:', data)
+        setError('Invalid server response')
+        return
       }
-    } catch (err) {
-      setError('Something went wrong. Please try again.')
+
+      localStorage.setItem('token', token)
+      localStorage.setItem('user', JSON.stringify(user))
+
+      // ✅ Show success message
+      toast?.success('Registration successful! Welcome to SkillBridge!')
+      
+      console.log('Successfully registered:', user)
+
+      // ✅ Redirect based on role
+      if (user.role === 'TUTOR') {
+        router.push('/dashboard/tutor')
+      } else if (user.role === 'STUDENT') {
+        router.push('/dashboard/student')
+      } else {
+        router.push('/dashboard') // default dashboard
+      }
+
+    } catch (err: any) {
+      console.error('Registration error:', err)
+      
+      // ✅ Better error handling
+      if (err.message === 'Failed to fetch') {
+        setError('Unable to connect to server. Please check your internet connection.')
+      } else {
+        setError(err.message || 'Something went wrong. Please try again.')
+      }
+      
+      toast?.error('Registration failed. Please try again.')
     } finally {
       setIsLoading(false)
     }
@@ -120,7 +167,7 @@ export default function RegisterPage() {
         {/* Bottom */}
         <div className="relative bg-white/5 border border-white/10 rounded-2xl p-5">
           <p className="text-white/70 text-sm leading-relaxed italic">
-        I found an amazing Math tutor within minutes. My grades improved drastically in just 2 months!
+            I found an amazing Math tutor within minutes. My grades improved drastically in just 2 months!
           </p>
           <div className="flex items-center gap-3 mt-4">
             <div className="w-8 h-8 rounded-full bg-gradient-to-br from-indigo-400 to-blue-400 flex items-center justify-center text-white text-xs font-bold">
@@ -246,6 +293,9 @@ export default function RegisterPage() {
                   {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
                 </button>
               </div>
+              <p className="text-xs text-muted-foreground">
+                Password must be at least 6 characters long
+              </p>
             </div>
 
             {/* Terms */}
@@ -276,9 +326,15 @@ export default function RegisterPage() {
             </Button>
           </form>
 
+          {/* Demo Account Notice (Optional) */}
+          <div className="text-center">
+            <p className="text-xs text-muted-foreground">
+              🎉 Free forever. No credit card required.
+            </p>
+          </div>
+
         </div>
       </div>
     </div>
   )
 }
- 
