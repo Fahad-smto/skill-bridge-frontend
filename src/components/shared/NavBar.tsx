@@ -4,7 +4,7 @@ import Link from 'next/link'
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import { Button } from '@/components/ui/button'
-import { Menu, X, GraduationCap, LogOut, LayoutDashboard } from 'lucide-react'
+import { Menu, X, GraduationCap, LogOut, LayoutDashboard, User } from 'lucide-react'
 
 const navLinks = [
   { label: 'Home', href: '/' },
@@ -19,86 +19,47 @@ export default function Navbar() {
   const [user, setUser] = useState<{ name: string; role: string } | null>(null)
   const [isLoading, setIsLoading] = useState(true)
 
-  // ─────────────────────────────────────────
-  // User check - Fixed to avoid cascading renders
-  // ─────────────────────────────────────────
   useEffect(() => {
-    // Use a flag to prevent state updates if component unmounts
-    let isMounted = true
-    
-    // Use a microtask or timeout to avoid synchronous setState
-    const loadUser = async () => {
+    const loadUser = () => {
       try {
         const stored = localStorage.getItem('user')
-        if (stored && isMounted) {
-          const parsedUser = JSON.parse(stored)
-          setUser(parsedUser)
+        if (stored) {
+          setUser(JSON.parse(stored))
         }
       } catch (error) {
         console.error('Failed to parse user data:', error)
       } finally {
-        if (isMounted) {
-          setIsLoading(false)
-        }
+        setIsLoading(false)
       }
     }
     
     loadUser()
-    
-    // Cleanup function
-    return () => {
-      isMounted = false
-    }
-  }, []) // Empty dependency array - runs once on mount
+  }, [])
 
-  // Alternative approach using requestAnimationFrame (even safer)
-  // useEffect(() => {
-  //   const timer = requestAnimationFrame(() => {
-  //     const stored = localStorage.getItem('user')
-  //     if (stored) {
-  //       try {
-  //         setUser(JSON.parse(stored))
-  //       } catch (error) {
-  //         console.error('Failed to parse user data:', error)
-  //       }
-  //     }
-  //     setIsLoading(false)
-  //   })
-  //   
-  //   return () => {
-  //     cancelAnimationFrame(timer)
-  //   }
-  // }, [])
-
-  // ─────────────────────────────────────────
-  // Dashboard route — role অনুযায়ী
-  // ─────────────────────────────────────────
   const getDashboardRoute = () => {
     if (user?.role === 'ADMIN') return '/dashboard/admin'
     if (user?.role === 'TUTOR') return '/dashboard/tutor'
     return '/dashboard/student'
   }
 
-  // ─────────────────────────────────────────
-  // Logout
-  // ─────────────────────────────────────────
   const handleLogout = () => {
     localStorage.removeItem('token')
     localStorage.removeItem('user')
     setUser(null)
     router.push('/')
-    setIsOpen(false) // Close mobile menu if open
+    setIsOpen(false)
   }
 
-  // Don't render anything while checking authentication to avoid flash
   if (isLoading) {
     return (
-      <nav className="sticky top-0 z-50 w-full border-b border-border bg-background/50 backdrop-blur-sm rounded-3xl">
+      <nav className="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-gray-100">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
-            <Link href="/" className="flex items-center gap-2 font-bold text-xl">
-              <GraduationCap className="w-7 h-7 text-primary" />
-              <span>SkillBridge</span>
+            <Link href="/" className="flex items-center gap-2">
+              <GraduationCap className="w-6 h-6 text-blue-600" />
+              <span className="font-bold text-xl bg-gradient-to-r from-blue-600 to-blue-800 bg-clip-text text-transparent">
+                SkillBridge
+              </span>
             </Link>
           </div>
         </div>
@@ -107,23 +68,25 @@ export default function Navbar() {
   }
 
   return (
-    <nav className="sticky top-0 z-50 w-full border-b border-border bg-background/50 backdrop-blur-sm rounded-3xl">
+    <nav className="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-gray-100">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
 
           {/* Logo */}
-          <Link href="/" className="flex items-center gap-2 font-bold text-xl">
-            <GraduationCap className="w-7 h-7 text-primary" />
-            <span>SkillBridge</span>
+          <Link href="/" className="flex items-center gap-2 group">
+            <GraduationCap className="w-6 h-6 text-blue-600 group-hover:scale-110 transition-transform" />
+            <span className="font-bold text-xl bg-gradient-to-r from-blue-600 to-blue-800 bg-clip-text text-transparent">
+              SkillBridge
+            </span>
           </Link>
 
-          {/* Desktop Nav Links */}
-          <div className="hidden md:flex items-center gap-6">
+          {/* Desktop Navigation */}
+          <div className="hidden md:flex items-center gap-8">
             {navLinks.map((link) => (
               <Link
                 key={link.href}
                 href={link.href}
-                className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+                className="text-gray-600 hover:text-blue-600 font-medium transition-colors"
               >
                 {link.label}
               </Link>
@@ -133,33 +96,37 @@ export default function Navbar() {
           {/* Desktop Buttons */}
           <div className="hidden md:flex items-center gap-3">
             {user ? (
-              // ✅ Logged in
               <>
-                <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                  <div className="w-8 h-8 rounded-full bg-primary text-primary-foreground flex items-center justify-center text-xs font-bold">
-                    {user.name?.charAt(0).toUpperCase()}
+                <div className="flex items-center gap-3">
+                  <div className="flex items-center gap-2 px-3 py-1.5 bg-gray-50 rounded-full">
+                    <div className="w-7 h-7 rounded-full bg-gradient-to-r from-blue-500 to-blue-600 flex items-center justify-center text-white text-xs font-bold">
+                      {user.name?.charAt(0).toUpperCase()}
+                    </div>
+                    <span className="text-sm font-medium text-gray-700">{user.name}</span>
                   </div>
-                  <span className="font-medium text-foreground">{user.name}</span>
+                  <Button variant="ghost" asChild className="text-gray-600 hover:text-blue-600">
+                    <Link href={getDashboardRoute()}>
+                      <LayoutDashboard className="w-4 h-4 mr-1" />
+                      Dashboard
+                    </Link>
+                  </Button>
+                  <Button 
+                    variant="outline" 
+                    onClick={handleLogout}
+                    className="border-red-200 text-red-600 hover:bg-red-50 hover:border-red-300"
+                  >
+                    <LogOut className="w-4 h-4 mr-1" />
+                    Logout
+                  </Button>
                 </div>
-                <Button variant="ghost" asChild>
-                  <Link href={getDashboardRoute()}>
-                    <LayoutDashboard className="w-4 h-4 mr-1" />
-                    Dashboard
-                  </Link>
-                </Button>
-                <Button variant="outline" onClick={handleLogout}>
-                  <LogOut className="w-4 h-4 mr-1" />
-                  Logout
-                </Button>
               </>
             ) : (
-              // ✅ Not logged in
               <>
-                <Button variant="ghost" asChild>
-                  <Link href="/login">Login</Link>
+                <Button variant="ghost" asChild className="text-gray-600 hover:text-blue-600">
+                  <Link href="/login">Sign in</Link>
                 </Button>
-                <Button asChild>
-                  <Link href="/register">Register now!</Link>
+                <Button asChild className="bg-blue-600 hover:bg-blue-700 text-white">
+                  <Link href="/register">Get Started</Link>
                 </Button>
               </>
             )}
@@ -167,7 +134,7 @@ export default function Navbar() {
 
           {/* Mobile Menu Button */}
           <button
-            className="md:hidden p-2 rounded-md text-muted-foreground hover:text-foreground transition-colors"
+            className="md:hidden p-2 rounded-lg text-gray-600 hover:bg-gray-100 transition-colors"
             onClick={() => setIsOpen(!isOpen)}
             aria-label="Toggle menu"
           >
@@ -179,57 +146,66 @@ export default function Navbar() {
 
       {/* Mobile Menu */}
       {isOpen && (
-        <div className="md:hidden border-t border-border bg-background px-4 py-4 space-y-3">
-          {navLinks.map((link) => (
-            <Link
-              key={link.href}
-              href={link.href}
-              className="block text-sm text-muted-foreground hover:text-foreground transition-colors py-1"
-              onClick={() => setIsOpen(false)}
-            >
-              {link.label}
-            </Link>
-          ))}
-
-          <div className="flex flex-col gap-2 pt-3 border-t border-border">
-            {user ? (
-              // ✅ Mobile — Logged in
-              <>
-                <div className="flex items-center gap-2 py-2">
-                  <div className="w-8 h-8 rounded-full bg-primary text-primary-foreground flex items-center justify-center text-xs font-bold">
-                    {user.name?.charAt(0).toUpperCase()}
+        <div className="md:hidden border-t border-gray-100 bg-white">
+          <div className="px-4 py-3 space-y-1">
+            {navLinks.map((link) => (
+              <Link
+                key={link.href}
+                href={link.href}
+                className="block px-3 py-2 text-gray-600 hover:text-blue-600 hover:bg-gray-50 rounded-lg transition-colors"
+                onClick={() => setIsOpen(false)}
+              >
+                {link.label}
+              </Link>
+            ))}
+            
+            <div className="pt-3 mt-2 border-t border-gray-100">
+              {user ? (
+                <>
+                  <div className="flex items-center gap-3 px-3 py-2 mb-2">
+                    <div className="w-10 h-10 rounded-full bg-gradient-to-r from-blue-500 to-blue-600 flex items-center justify-center text-white font-bold">
+                      {user.name?.charAt(0).toUpperCase()}
+                    </div>
+                    <div>
+                      <div className="text-sm font-semibold text-gray-900">{user.name}</div>
+                      <div className="text-xs text-gray-500 capitalize">{user.role?.toLowerCase()}</div>
+                    </div>
                   </div>
-                  <div>
-                    <div className="text-sm font-medium">{user.name}</div>
-                    <div className="text-xs text-muted-foreground capitalize">{user.role?.toLowerCase()}</div>
-                  </div>
-                </div>
-                <Button variant="outline" asChild className="w-full">
-                  <Link href={getDashboardRoute()} onClick={() => setIsOpen(false)}>
-                    <LayoutDashboard className="w-4 h-4 mr-2" />
+                  <Link
+                    href={getDashboardRoute()}
+                    className="flex items-center gap-2 px-3 py-2 text-gray-600 hover:text-blue-600 hover:bg-gray-50 rounded-lg transition-colors"
+                    onClick={() => setIsOpen(false)}
+                  >
+                    <LayoutDashboard className="w-4 h-4" />
                     Dashboard
                   </Link>
-                </Button>
-                <Button variant="outline" onClick={handleLogout} className="w-full">
-                  <LogOut className="w-4 h-4 mr-2" />
-                  Logout
-                </Button>
-              </>
-            ) : (
-              // ✅ Mobile — Not logged in
-              <>
-                <Button variant="outline" asChild className="w-full">
-                  <Link href="/login" onClick={() => setIsOpen(false)}>
-                    Login
+                  <button
+                    onClick={handleLogout}
+                    className="flex items-center gap-2 w-full px-3 py-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors"
+                  >
+                    <LogOut className="w-4 h-4" />
+                    Logout
+                  </button>
+                </>
+              ) : (
+                <>
+                  <Link
+                    href="/login"
+                    className="block px-3 py-2 text-gray-600 hover:text-blue-600 hover:bg-gray-50 rounded-lg transition-colors"
+                    onClick={() => setIsOpen(false)}
+                  >
+                    Sign in
                   </Link>
-                </Button>
-                <Button asChild className="w-full">
-                  <Link href="/register" onClick={() => setIsOpen(false)}>
+                  <Link
+                    href="/register"
+                    className="block px-3 py-2 mt-1 bg-blue-600 text-white text-center rounded-lg hover:bg-blue-700 transition-colors"
+                    onClick={() => setIsOpen(false)}
+                  >
                     Get Started
                   </Link>
-                </Button>
-              </>
-            )}
+                </>
+              )}
+            </div>
           </div>
         </div>
       )}
