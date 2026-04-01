@@ -1,3 +1,4 @@
+// app/login/page.tsx - Fixed version
 'use client'
 
 import { useState } from 'react'
@@ -32,27 +33,41 @@ export default function LoginPage() {
       )
 
       const data = await res.json()
+      console.log('Login response:', data) // Debug
 
       if (!data.success) {
         setError(data.message || 'Login failed')
         return
       }
 
-      // Token এবং user save করো
-      localStorage.setItem('token', data.data.token)
-      localStorage.setItem('user', JSON.stringify(data.data.user))
+      // ✅ Fix: Token may be in different places
+      const token = data.token || data.data?.token
+      const user = data.user || data.data?.user
+
+      if (!token) {
+        console.error('No token in response:', data)
+        setError('Login failed: No token received')
+        return
+      }
+
+      // Save token and user
+      localStorage.setItem('token', token)
+      localStorage.setItem('user', JSON.stringify(user))
+      
+      console.log('Token saved:', token.substring(0, 50) + '...')
+      console.log('User saved:', user)
 
       // Role based redirect
-      const role = data.data.user.role
-      if (role === 'ADMIN') {
+      if (user.role === 'ADMIN') {
         router.push('/dashboard/admin')
-      } else if (role === 'TUTOR') {
+      } else if (user.role === 'TUTOR') {
         router.push('/dashboard/tutor')
       } else {
         router.push('/dashboard/student')
       }
 
     } catch (err) {
+      console.error('Login error:', err)
       setError('Something went wrong. Please try again.')
     } finally {
       setIsLoading(false)
@@ -61,8 +76,7 @@ export default function LoginPage() {
 
   return (
     <div className="min-h-screen flex">
-
-      {/* ── Left Panel ── */}
+      {/* Left Panel - Same as before */}
       <div className="hidden lg:flex lg:w-1/2 relative overflow-hidden bg-zinc-950 flex-col justify-between p-12">
         <div
           className="absolute inset-0 opacity-10"
@@ -127,7 +141,7 @@ export default function LoginPage() {
         </div>
       </div>
 
-      {/* ── Right Panel ── */}
+      {/* Right Panel */}
       <div className="w-full lg:w-1/2 flex items-center justify-center p-8 bg-background">
         <div className="w-full max-w-md space-y-8">
 
@@ -147,7 +161,7 @@ export default function LoginPage() {
             </p>
           </div>
 
-          {/* ✅ Error Message */}
+          {/* Error Message */}
           {error && (
             <div className="bg-red-50 border border-red-200 text-red-600 text-sm px-4 py-3 rounded-lg">
               {error}
@@ -247,4 +261,3 @@ export default function LoginPage() {
     </div>
   )
 }
- 

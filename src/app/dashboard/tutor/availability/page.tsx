@@ -173,7 +173,7 @@ export default function TutorAvailabilityPage() {
                     <div className="flex items-center gap-2 pt-6">
                       <Switch
                         checked={slot.isRecurring}
-                        onCheckedChange={(checked) => updateTimeSlot(index, 'isRecurring', checked)}
+                        onCheckedChange={(checked ) => updateTimeSlot(index, 'isRecurring', checked)}
                       />
                       <Label>Recurring weekly</Label>
                     </div>
