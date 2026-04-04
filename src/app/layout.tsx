@@ -1,4 +1,4 @@
-import HeroCarousel from "@/components/ui/HeroCarousel";
+// app/layout.tsx
 import "./globals.css";
 import Navbar from '@/components/shared/NavBar';
 
@@ -11,9 +11,7 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <body>
         <Navbar />
-        <HeroCarousel></HeroCarousel>
         {children}
-
       </body>
     </html>
   )
