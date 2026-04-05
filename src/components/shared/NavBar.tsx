@@ -1,8 +1,9 @@
+// components/shared/NavBar.tsx
 'use client'
 
 import Link from 'next/link'
 import { useState, useEffect } from 'react'
-import { useRouter } from 'next/navigation'
+import { useRouter, usePathname } from 'next/navigation'
 import { Button } from '@/components/ui/button'
 import { Menu, X, GraduationCap, LogOut, LayoutDashboard, User } from 'lucide-react'
 
@@ -15,26 +16,49 @@ const navLinks = [
 
 export default function Navbar() {
   const router = useRouter()
+  const pathname = usePathname()
   const [isOpen, setIsOpen] = useState(false)
   const [user, setUser] = useState<{ name: string; role: string } | null>(null)
   const [isLoading, setIsLoading] = useState(true)
 
-  useEffect(() => {
-    const loadUser = () => {
-      try {
-        const stored = localStorage.getItem('user')
-        if (stored) {
-          setUser(JSON.parse(stored))
-        }
-      } catch (error) {
-        console.error('Failed to parse user data:', error)
-      } finally {
-        setIsLoading(false)
+  // ✅ Auth state check function
+  const checkAuth = () => {
+    try {
+      const stored = localStorage.getItem('user')
+      if (stored) {
+        const userData = JSON.parse(stored)
+        setUser(userData)
+      } else {
+        setUser(null)
       }
+    } catch (error) {
+      console.error('Failed to parse user data:', error)
+      setUser(null)
+    } finally {
+      setIsLoading(false)
     }
+  }
+
+  // ✅ Listen for storage changes (when login/register happens)
+  useEffect(() => {
+    checkAuth()
     
-    loadUser()
+    // Listen for localStorage changes (for cross-tab sync)
+    window.addEventListener('storage', checkAuth)
+    
+    // Custom event for login/register
+    window.addEventListener('authChange', checkAuth)
+    
+    return () => {
+      window.removeEventListener('storage', checkAuth)
+      window.removeEventListener('authChange', checkAuth)
+    }
   }, [])
+
+  // ✅ Also check when pathname changes (navigation)
+  useEffect(() => {
+    checkAuth()
+  }, [pathname])
 
   const getDashboardRoute = () => {
     if (user?.role === 'ADMIN') return '/dashboard/admin'
@@ -46,6 +70,10 @@ export default function Navbar() {
     localStorage.removeItem('token')
     localStorage.removeItem('user')
     setUser(null)
+    
+    // ✅ Dispatch custom event to update other components
+    window.dispatchEvent(new Event('authChange'))
+    
     router.push('/')
     setIsOpen(false)
   }
@@ -80,7 +108,7 @@ export default function Navbar() {
             </span>
           </Link>
 
-          {/* Desktop Navigation */}
+          {/* Desktop Nav Links */}
           <div className="hidden md:flex items-center gap-8">
             {navLinks.map((link) => (
               <Link
