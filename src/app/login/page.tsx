@@ -1,6 +1,12 @@
 // app/login/page.tsx - Fixed version
 'use client'
 
+import { useState } from 'react'
+import Link from 'next/link'
+import { useRouter } from 'next/navigation'
+import { Button } from '@/components/ui/button'
+import { Eye, EyeOff, GraduationCap, ArrowRight } from 'lucide-react'
+
 export default function LoginPage() {
   const router = useRouter()
   const [showPassword, setShowPassword] = useState(false)
