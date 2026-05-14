@@ -1,5 +1,5 @@
 // app/login/page.tsx - Fixed version
-'use client'
+
 
 import { useState } from 'react'
 import Link from 'next/link'
