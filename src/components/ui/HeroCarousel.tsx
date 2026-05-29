@@ -7,92 +7,92 @@ import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 import { ArrowRight, ChevronLeft, ChevronRight } from 'lucide-react'
 
-const slides = [
-  {
-    id: 1,
-    badge: '🎓 #1 Tutoring Platform',
-    title: 'Learn From',
-    highlight: 'Expert Tutors',
-    subtitle: 'Anywhere, Anytime',
-    description:
-      'Connect with 1,200+ verified tutors across 50+ subjects. Book sessions instantly and start learning today.',
-    cta: 'Find a Tutor',
-    ctaHref: '/tutors',
-    bg: 'from-blue-950 via-blue-900 to-indigo-950',
-    orb1: 'bg-blue-500/30',
-    orb2: 'bg-indigo-500/20',
-    accent: 'from-blue-400 to-indigo-400',
-    stats: [
-      { value: '10K+', label: 'Students' },
-      { value: '1.2K+', label: 'Tutors' },
-      { value: '50+', label: 'Subjects' },
-    ],
-    emoji: '📚',
-  },
-  {
-    id: 2,
-    badge: '💻 Tech & Programming',
-    title: 'Master',
-    highlight: 'Coding Skills',
-    subtitle: 'With Pro Developers',
-    description:
-      'Learn Python, JavaScript, React, and more from industry professionals with real-world experience.',
-    cta: 'Explore Coding',
-    ctaHref: '/tutors?category=Programming',
-    bg: 'from-emerald-950 via-teal-900 to-cyan-950',
-    orb1: 'bg-emerald-500/30',
-    orb2: 'bg-teal-500/20',
-    accent: 'from-emerald-400 to-cyan-400',
-    stats: [
-      { value: '200+', label: 'Dev Tutors' },
-      { value: '4.9★', label: 'Rating' },
-      { value: '24/7', label: 'Available' },
-    ],
-    emoji: '💻',
-  },
-  {
-    id: 3,
-    badge: '🎵 Arts & Music',
-    title: 'Unlock Your',
-    highlight: 'Creative Talent',
-    subtitle: 'With Artist Mentors',
-    description:
-      'From guitar to graphic design, discover passionate tutors who will help you express your creativity.',
-    cta: 'Start Creating',
-    ctaHref: '/tutors?category=Music',
-    bg: 'from-rose-950 via-pink-900 to-purple-950',
-    orb1: 'bg-rose-500/30',
-    orb2: 'bg-purple-500/20',
-    accent: 'from-rose-400 to-purple-400',
-    stats: [
-      { value: '300+', label: 'Art Tutors' },
-      { value: '15+', label: 'Art Forms' },
-      { value: '98%', label: 'Satisfaction' },
-    ],
-    emoji: '🎨',
-  },
-  {
-    id: 4,
-    badge: '📐 Mathematics',
-    title: 'Conquer',
-    highlight: 'Math & Science',
-    subtitle: 'Fear No Equation',
-    description:
-      'Top-rated math and science tutors make complex topics simple. From algebra to quantum physics.',
-    cta: 'Find Math Tutor',
-    ctaHref: '/tutors?category=Mathematics',
-    bg: 'from-amber-950 via-orange-900 to-red-950',
-    orb1: 'bg-amber-500/30',
-    orb2: 'bg-orange-500/20',
-    accent: 'from-amber-400 to-orange-400',
-    stats: [
-      { value: '500+', label: 'Math Tutors' },
-      { value: '92%', label: 'Pass Rate' },
-      { value: '1-on-1', label: 'Sessions' },
-    ],
-    emoji: '📐',
-  },
-]
+// const slides = [
+//   {
+//     id: 1,
+//     badge: '🎓 #1 Tutoring Platform',
+//     title: 'Learn From',
+//     highlight: 'Expert Tutors',
+//     subtitle: 'Anywhere, Anytime',
+//     description:
+//       'Connect with 1,200+ verified tutors across 50+ subjects. Book sessions instantly and start learning today.',
+//     cta: 'Find a Tutor',
+//     ctaHref: '/tutors',
+//     bg: 'from-blue-950 via-blue-900 to-indigo-950',
+//     orb1: 'bg-blue-500/30',
+//     orb2: 'bg-indigo-500/20',
+//     accent: 'from-blue-400 to-indigo-400',
+//     stats: [
+//       { value: '10K+', label: 'Students' },
+//       { value: '1.2K+', label: 'Tutors' },
+//       { value: '50+', label: 'Subjects' },
+//     ],
+//     emoji: '📚',
+//   },
+//   {
+//     id: 2,
+//     badge: '💻 Tech & Programming',
+//     title: 'Master',
+//     highlight: 'Coding Skills',
+//     subtitle: 'With Pro Developers',
+//     description:
+//       'Learn Python, JavaScript, React, and more from industry professionals with real-world experience.',
+//     cta: 'Explore Coding',
+//     ctaHref: '/tutors?category=Programming',
+//     bg: 'from-emerald-950 via-teal-900 to-cyan-950',
+//     orb1: 'bg-emerald-500/30',
+//     orb2: 'bg-teal-500/20',
+//     accent: 'from-emerald-400 to-cyan-400',
+//     stats: [
+//       { value: '200+', label: 'Dev Tutors' },
+//       { value: '4.9★', label: 'Rating' },
+//       { value: '24/7', label: 'Available' },
+//     ],
+//     emoji: '💻',
+//   },
+//   {
+//     id: 3,
+//     badge: '🎵 Arts & Music',
+//     title: 'Unlock Your',
+//     highlight: 'Creative Talent',
+//     subtitle: 'With Artist Mentors',
+//     description:
+//       'From guitar to graphic design, discover passionate tutors who will help you express your creativity.',
+//     cta: 'Start Creating',
+//     ctaHref: '/tutors?category=Music',
+//     bg: 'from-rose-950 via-pink-900 to-purple-950',
+//     orb1: 'bg-rose-500/30',
+//     orb2: 'bg-purple-500/20',
+//     accent: 'from-rose-400 to-purple-400',
+//     stats: [
+//       { value: '300+', label: 'Art Tutors' },
+//       { value: '15+', label: 'Art Forms' },
+//       { value: '98%', label: 'Satisfaction' },
+//     ],
+//     emoji: '🎨',
+//   },
+//   {
+//     id: 4,
+//     badge: '📐 Mathematics',
+//     title: 'Conquer',
+//     highlight: 'Math & Science',
+//     subtitle: 'Fear No Equation',
+//     description:
+//       'Top-rated math and science tutors make complex topics simple. From algebra to quantum physics.',
+//     cta: 'Find Math Tutor',
+//     ctaHref: '/tutors?category=Mathematics',
+//     bg: 'from-amber-950 via-orange-900 to-red-950',
+//     orb1: 'bg-amber-500/30',
+//     orb2: 'bg-orange-500/20',
+//     accent: 'from-amber-400 to-orange-400',
+//     stats: [
+//       { value: '500+', label: 'Math Tutors' },
+//       { value: '92%', label: 'Pass Rate' },
+//       { value: '1-on-1', label: 'Sessions' },
+//     ],
+//     emoji: '📐',
+//   },
+// ]
 
 export default function HeroCarousel() {
   const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true }, [
