@@ -60,7 +60,7 @@ export default function HomePage() {
       </section>
 
       {/* Featured Tutors Section */}
-      <section className="py-24 bg-gray-50 mt-16 rounded-[3rem]">
+      {/* <section className="py-24 bg-gray-50 mt-16 rounded-[3rem]">
         <div className="container mx-auto px-4">
           <motion.div 
             initial={{ opacity: 0, y: 20 }}
@@ -113,7 +113,7 @@ export default function HomePage() {
             ))}
           </div>
         </div>
-      </section>
+      </section> */}
 
       {/* How It Works Section */}
       <section className="py-24 mt-16">
