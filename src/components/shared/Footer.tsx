@@ -1,5 +1,5 @@
 // components/layout/Footer.tsx
-
+import Link from "next/link";
 import { 
   Facebook, 
   Twitter, 
