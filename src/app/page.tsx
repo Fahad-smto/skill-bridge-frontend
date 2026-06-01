@@ -60,7 +60,60 @@ export default function HomePage() {
       </section>
 
       {/* Featured Tutors Section */}
-    
+      <section className="py-24 bg-gray-50 mt-16 rounded-[3rem]">
+        <div className="container mx-auto px-4">
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-center mb-16"
+          >
+            <h2 className="text-4xl font-bold text-gray-900 mb-4">Meet Our Top Educators</h2>
+            <div className="h-1.5 w-20 bg-blue-600 mx-auto rounded-full mb-4"></div>
+            <p className="text-gray-600 max-w-2xl mx-auto text-lg">
+              Learn from verified professionals dedicated to your academic and professional success.
+            </p>
+          </motion.div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            {[
+              { name: "Dr. Rahim Ahmed", subject: "Mathematics", rating: 4.9, price: 500, icon: "👨‍🏫" },
+              { name: "Prof. Fatema Begum", subject: "Physics", rating: 4.8, price: 600, icon: "👩‍🏫" },
+              { name: "Mr. Karim Hasan", subject: "Programming", rating: 4.9, price: 700, icon: "👨‍💻" },
+              { name: "Ms. Sumaiya Akter", subject: "English", rating: 4.7, price: 450, icon: "👩‍🏫" },
+            ].map((tutor, idx) => (
+              <motion.div 
+                key={idx}
+                variants={fadeInUp}
+                whileHover={{ y: -10 }}
+                className="bg-white rounded-3xl shadow-sm border border-gray-100 p-6 transition-all hover:shadow-xl group"
+              >
+                <div className="flex flex-col items-center mb-6">
+                  <div className="w-24 h-24 rounded-3xl bg-gradient-to-br from-blue-50 to-indigo-50 flex items-center justify-center text-5xl mb-4 group-hover:rotate-3 transition-transform">
+                    {tutor.icon}
+                  </div>
+                  <h3 className="font-bold text-xl text-gray-900">{tutor.name}</h3>
+                  <p className="text-blue-600 font-medium">{tutor.subject}</p>
+                  <div className="flex items-center gap-1 mt-2 bg-yellow-50 px-3 py-1 rounded-full">
+                    <Star className="w-4 h-4 text-yellow-500 fill-current" />
+                    <span className="text-sm font-bold text-gray-700">{tutor.rating}</span>
+                  </div>
+                </div>
+                
+                <div className="flex items-center justify-between pt-4 border-t border-gray-50">
+                  <div>
+                    <span className="text-xl font-bold text-gray-900">৳{tutor.price}</span>
+                    <span className="text-gray-500 text-xs">/hr</span>
+                  </div>
+                  <Link href={`/tutors`} className="bg-blue-600 text-white p-2 rounded-xl hover:bg-blue-700 transition-colors">
+                    <ChevronRight className="w-5 h-5" />
+                  </Link>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
 
       {/* How It Works Section */}
       <section className="py-24 mt-16">
