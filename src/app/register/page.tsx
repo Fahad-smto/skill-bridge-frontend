@@ -6,7 +6,7 @@ import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { Eye, EyeOff, GraduationCap, ArrowRight } from 'lucide-react'
 import { Button } from '@/components/ui/button'
-import { toast } from 'sonner' // যদি toast ব্যবহার করেন
+import { toast } from 'sonner' 
 
 export default function RegisterPage() {
   const router = useRouter()
