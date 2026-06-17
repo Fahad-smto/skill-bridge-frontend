@@ -153,7 +153,7 @@ export default function Navbar() {
                 <Button variant="ghost" asChild className="text-gray-600 hover:text-blue-600">
                   <Link href="/login">Sign in</Link>
                 </Button>
-                <Button asChild className="bg-black  text-white">
+                <Button asChild className="bg-black hover:bg-gray-800 text-white">
                   <Link href="/register">Get Started</Link>
                 </Button>
               </>
