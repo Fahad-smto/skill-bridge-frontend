@@ -103,7 +103,7 @@ export default function Navbar() {
           {/* Logo */}
           <Link href="/" className="flex items-center gap-2 group">
             <GraduationCap className="w-6 h-6 text-blue-600 group-hover:scale-110 transition-transform" />
-            <span className="font-bold text-xl  bg-clip-text text-transparent">
+            <span className="font-bold text-xl text-black bg-clip-text text-transparent">
               SkillBridge
             </span>
           </Link>
