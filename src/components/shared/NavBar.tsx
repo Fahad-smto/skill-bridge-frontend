@@ -102,8 +102,8 @@ export default function Navbar() {
 
           {/* Logo */}
           <Link href="/" className="flex items-center gap-2 group">
-            <GraduationCap className="w-6 h-6 text-blue-600 group-hover:scale-110 transition-transform" />
-            <span className="font-bold text-xl text-black bg-clip-text text-transparent">
+            <GraduationCap className="w-6 h-6 text-black group-hover:scale-110 transition-transform" />
+            <span className="font-bold text-xl text-black bg-clip-text   group-hover:from-black group-hover:to-gray-800 transition-colors">
               SkillBridge
             </span>
           </Link>
