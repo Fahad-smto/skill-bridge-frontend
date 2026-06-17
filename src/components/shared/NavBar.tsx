@@ -180,7 +180,7 @@ export default function Navbar() {
               <Link
                 key={link.href}
                 href={link.href}
-                className="block px-3 py-2 text-gray-600 hover:text-blue-600 hover:bg-gray-50 rounded-lg transition-colors"
+                className="block px-3 py-2 text-gray-600 hover:text-black hover:bg-gray-50 rounded-lg transition-colors"
                 onClick={() => setIsOpen(false)}
               >
                 {link.label}
