@@ -85,7 +85,7 @@ export default function Navbar() {
           <div className="flex items-center justify-between h-16">
             <Link href="/" className="flex items-center gap-2">
               <GraduationCap className="w-6 h-6 " />
-              <span className="font-bold text-xl bg-gradient-to-r  bg-clip-text text-transparent">
+              <span className="font-bold text-xl  bg-clip-text text-transparent">
                 SkillBridge
               </span>
             </Link>
