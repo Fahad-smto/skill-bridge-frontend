@@ -105,7 +105,7 @@ export default function HomePage() {
                     <span className="text-xl font-bold text-gray-900">৳{tutor.price}</span>
                     <span className="text-gray-500 text-xs">/hr</span>
                   </div>
-                  <Link href={`/tutors`} className="bg-blue-600 text-white p-2 rounded-xl hover:bg-blue-700 transition-colors">
+                  <Link href={`/tutors`} className="bg-black text-white p-2 rounded-xl hover:bg-gray-800 transition-colors">
                     <ChevronRight className="w-5 h-5" />
                   </Link>
                 </div>
@@ -134,7 +134,7 @@ export default function HomePage() {
                 initial={{ opacity: 0, scale: 0.9 }}
                 whileInView={{ opacity: 1, scale: 1 }}
                 viewport={{ once: true }}
-                className="text-center p-8 rounded-[2.5rem] bg-gray-50 border border-transparent hover:border-blue-200 transition-colors"
+                className="text-center p-8 rounded-[2.5rem] bg-gray-50 border border-transparent hover:border-black transition-colors"
               >
                 <div className={`w-20 h-20 ${item.color} rounded-3xl flex items-center justify-center mx-auto mb-6 shadow-sm`}>
                   <item.icon className="w-10 h-10" />
@@ -160,7 +160,7 @@ export default function HomePage() {
             Join thousands of students who are already transforming their lives with SkillBridge.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link href="/register" className="bg-white text-blue-700 px-10 py-4 rounded-2xl font-bold hover:shadow-lg transition-all">
+            <Link href="/register" className="bg-white text-black px-10 py-4 rounded-2xl font-bold hover:shadow-lg transition-all">
               Get Started Free
             </Link>
             <Link href="/tutors" className="border-2 border-white/30 text-white px-10 py-4 rounded-2xl font-bold hover:bg-white/10 transition-all">
