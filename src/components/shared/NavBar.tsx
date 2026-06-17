@@ -114,7 +114,7 @@ export default function Navbar() {
               <Link
                 key={link.href}
                 href={link.href}
-                className="text-gray-600 hover:text-blue-600 font-medium transition-colors"
+                className="text-gray-600 hover:text-black font-medium transition-colors"
               >
                 {link.label}
               </Link>
@@ -132,7 +132,7 @@ export default function Navbar() {
                     </div>
                     <span className="text-sm font-medium text-gray-700">{user.name}</span>
                   </div>
-                  <Button variant="ghost" asChild className="text-gray-600 hover:text-blue-600">
+                  <Button variant="ghost" asChild className="text-gray-600 hover:text-black">
                     <Link href={getDashboardRoute()}>
                       <LayoutDashboard className="w-4 h-4 mr-1" />
                       Dashboard
