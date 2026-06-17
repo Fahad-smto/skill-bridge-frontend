@@ -191,7 +191,7 @@ export default function Navbar() {
               {user ? (
                 <>
                   <div className="flex items-center gap-3 px-3 py-2 mb-2">
-                    <div className="w-10 h-10 rounded-full bg-gradient-to-r from-blue-500 to-blue-600 flex items-center justify-center text-white font-bold">
+                    <div className="w-10 h-10 rounded-full bg-gradient-to-r from-black to-gray-800 flex items-center justify-center text-white font-bold">
                       {user.name?.charAt(0).toUpperCase()}
                     </div>
                     <div>
@@ -201,7 +201,7 @@ export default function Navbar() {
                   </div>
                   <Link
                     href={getDashboardRoute()}
-                    className="flex items-center gap-2 px-3 py-2 text-gray-600 hover:text-blue-600 hover:bg-gray-50 rounded-lg transition-colors"
+                    className="flex items-center gap-2 px-3 py-2 text-gray-600 hover:text-black hover:bg-gray-50 rounded-lg transition-colors"
                     onClick={() => setIsOpen(false)}
                   >
                     <LayoutDashboard className="w-4 h-4" />
@@ -219,14 +219,14 @@ export default function Navbar() {
                 <>
                   <Link
                     href="/login"
-                    className="block px-3 py-2 text-gray-600 hover:text-blue-600 hover:bg-gray-50 rounded-lg transition-colors"
+                    className="block px-3 py-2 text-gray-600 hover:text-black hover:bg-gray-50 rounded-lg transition-colors"
                     onClick={() => setIsOpen(false)}
                   >
                     Sign in
                   </Link>
                   <Link
                     href="/register"
-                    className="block px-3 py-2 mt-1 bg-blue-600 text-white text-center rounded-lg hover:bg-blue-700 transition-colors"
+                    className="block px-3 py-2 mt-1 bg-black text-white text-center rounded-lg hover:bg-gray-800 transition-colors"
                     onClick={() => setIsOpen(false)}
                   >
                     Get Started
