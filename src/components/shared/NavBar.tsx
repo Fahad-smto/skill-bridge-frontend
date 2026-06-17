@@ -150,7 +150,7 @@ export default function Navbar() {
               </>
             ) : (
               <>
-                <Button variant="ghost" asChild className="text-gray-600 hover:text-blue-600">
+                <Button variant="ghost" asChild className="text-gray-600 hover:text-black">
                   <Link href="/login">Sign in</Link>
                 </Button>
                 <Button asChild className="bg-black hover:bg-gray-800 text-white">
