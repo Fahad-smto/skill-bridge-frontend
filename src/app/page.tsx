@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "framer-motion";
+
 import HeroCarousel from "@/components/ui/HeroCarousel";
 import Link from "next/link";
  
