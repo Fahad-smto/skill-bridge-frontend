@@ -98,7 +98,7 @@ export default function Footer() {
             <span className="flex items-center gap-2">Built with <span className="text-red-500 animate-pulse">❤️</span> in Dhaka</span>
             <div className="flex items-center gap-2 px-4 py-1.5 bg-slate-800 rounded-full text-sm font-mono border border-slate-700">
               <Github className="w-4 h-4" />
-             
+              <span>v1.0.4</span>
             </div>
           </div>
         </div>
