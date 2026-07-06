@@ -139,7 +139,12 @@ export default function RegisterPage() {
             <div className="inline-flex items-center gap-2 bg-white/10 border border-white/20 rounded-full px-4 py-1.5 text-white/70 text-sm">
               🎓 Join 10,000+ learners today
             </div>
-           
+            <h1 className="text-5xl font-bold text-white leading-tight">
+              Start your
+              <span className="block text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-blue-400">
+                learning journey.
+              </span>
+            </h1>
             <p className="text-white/50 text-lg leading-relaxed max-w-sm">
               Create a free account and get instant access to 1,200+ verified tutors across 50+ subjects.
             </p>
