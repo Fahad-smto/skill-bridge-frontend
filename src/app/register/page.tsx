@@ -142,7 +142,7 @@ export default function RegisterPage() {
             <h1 className="text-5xl font-bold text-white leading-tight">
               Start your
               <span className="block text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-blue-400">
-             
+                learning journey.
               </span>
             </h1>
             <p className="text-white/50 text-lg leading-relaxed max-w-sm">
