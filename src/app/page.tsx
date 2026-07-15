@@ -159,14 +159,7 @@ export default function HomePage() {
           <p className="text-blue-100 mb-10 max-w-xl mx-auto text-lg">
             Join thousands of students who are already transforming their lives with SkillBridge.
           </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link href="/register" className="bg-white text-black px-10 py-4 rounded-2xl font-bold hover:shadow-lg transition-all">
-              Get Started Free
-            </Link>
-            <Link href="/tutors" className="border-2 border-white/30 text-white px-10 py-4 rounded-2xl font-bold hover:bg-white/10 transition-all">
-              Browse Tutors
-            </Link>
-          </div>
+         
         </motion.div>
       </section>
 
