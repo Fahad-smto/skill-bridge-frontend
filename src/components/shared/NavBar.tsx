@@ -40,20 +40,7 @@ export default function Navbar() {
   }
 
   // ✅ Listen for storage changes (when login/register happens)
-  useEffect(() => {
-    checkAuth()
-    
-    // Listen for localStorage changes (for cross-tab sync)
-    window.addEventListener('storage', checkAuth)
-    
-    // Custom event for login/register
-    window.addEventListener('authChange', checkAuth)
-    
-    return () => {
-      window.removeEventListener('storage', checkAuth)
-      window.removeEventListener('authChange', checkAuth)
-    }
-  }, [])
+
 
   // ✅ Also check when pathname changes (navigation)
   useEffect(() => {
