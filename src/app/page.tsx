@@ -170,6 +170,7 @@ export default function HomePage() {
         </motion.div>
       </section>
 
+      <Footer />
     </main>
   );
 }
