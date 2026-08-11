@@ -7,7 +7,12 @@ import { useRouter, usePathname } from 'next/navigation'
 import { Button } from '@/components/ui/button'
 import { Menu, X, GraduationCap, LogOut, LayoutDashboard, User } from 'lucide-react'
 
-
+const navLinks = [
+  { label: 'Home', href: '/' },
+  { label: 'Browse Tutors', href: '/tutors' },
+  { label: 'Categories', href: '/categories' },
+  { label: 'About', href: '/about-us' },
+]
 
 export default function Navbar() {
   const router = useRouter()
