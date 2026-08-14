@@ -218,7 +218,9 @@ export default function LoginPage() {
             >
               {isLoading ? (
                 <span className="flex items-center gap-2">
-                 
+                  <span className="w-4 h-4 border-2 border-primary-foreground/30 border-t-primary-foreground rounded-full animate-spin" />
+                  Signing in...
+                </span>
               ) : (
                 <span className="flex items-center gap-2">
                   Sign in
