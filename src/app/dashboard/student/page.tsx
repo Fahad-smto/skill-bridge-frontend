@@ -435,7 +435,7 @@ export default function StudentDashboard() {
                 onClick={() => setReviewModal(null)}
                 className="flex-1 border border-gray-200 text-gray-600 py-2.5 rounded-xl text-sm hover:bg-gray-50 transition-colors"
               >
-             
+                Cancel
               </button>
             </div>
           </div>
