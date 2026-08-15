@@ -254,7 +254,7 @@ export default function HeroCarousel() {
               index === selectedIndex
                 ? 'w-8 h-2 bg-white'
                 : 'w-2 h-2 bg-white/40 hover:bg-white/60'
-            }`}
+            }`}  
           />
         ))}
       </div>
