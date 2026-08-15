@@ -164,11 +164,7 @@ export default function HomePage() {
               Get Started Free
             </Link>
             <Link href="/tutors" className="border-2 border-white/30 text-white px-10 py-4 rounded-2xl font-bold hover:bg-white/10 transition-all">
-              Browse Tutors
-            </Link>
-          </div>
-        </motion.div>
-      </section>
+             </section>
 
       <Footer />
     </main>
